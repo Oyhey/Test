@@ -32,9 +32,9 @@
     }
 
     #output {
-      margin-top: 20px;
+      margin-top: 0px;
       font-size: 20px;
-      color: darkred;
+      color: black;
       height: 30px;
     }
   </style>
@@ -51,17 +51,17 @@
 
     textarea.addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
-        event.preventDefault(); // prevent new line
+        event.preventDefault();
         const message = "are you dumb?";
         textarea.value = "";
-        output.textContent = ""; // clear previous output
+        output.textContent = ""; 
 
         let i = 0;
         const typeEffect = setInterval(() => {
           output.textContent += message[i];
           i++;
           if (i >= message.length) clearInterval(typeEffect);
-        }, 100); // speed of typing
+        }, 200);
       }
     });
   </script>
