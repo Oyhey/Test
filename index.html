@@ -56,11 +56,18 @@
         textarea.value = "";
         output.textContent = ""; 
 
-        let i = 0;
+let i = 0;
         const typeEffect = setInterval(() => {
           output.textContent += message[i];
           i++;
-          if (i >= message.length) clearInterval(typeEffect);
+          if (i >= message.length) {
+            clearInterval(typeEffect);
+
+            // Hide the text after 2 seconds
+            setTimeout(() => {
+              output.textContent = "";
+            }, 2000); // 2000 ms (2 seconds)
+          }
         }, 200);
       }
     });
