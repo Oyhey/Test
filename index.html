@@ -144,26 +144,7 @@
             }, 2000); 
           }
         }, 25);
-      }
-      let touchStartX = 0;
-let touchEndX = 0;
-const sidebar = document.getElementById('sidebar');
-
-document.addEventListener('touchstart', function(e) {
-  touchStartX = e.changedTouches[0].screenX;
-}, false);
-
-document.addEventListener('touchend', function(e) {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipeGesture();
-}, false);
-
-function handleSwipeGesture() {
-  const swipeDistance = touchEndX - touchStartX;
-  if (swipeDistance > 100) {
-    sidebar.classList.add('hidden'); // Right swipe hides sidebar
-  }
-}
+      } 
     });
-  </script>
+  </script> 
 </body>
