@@ -3,19 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typing Animation</title>
+  <title>Password Security Info</title>
   <style>
     body {
       height: 100vh;
+      margin: 0;
+      display: flex;
+      font-family: sans-serif;
+      background-color: #f0f8ff;
+    }
+
+    #sidebar {
+      width: 300px;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+
+    #sidebar h2 {
+      color: midnightblue;
+      font-size: 22px;
+    }
+
+    #sidebar p, #sidebar ul {
+      font-size: 14px;
+      color: #333;
+    }
+
+    #sidebar ul {
+      padding-left: 20px;
+    }
+
+    #main {
+      flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #f0f8ff;
-      font-family: sans-serif;
-    }
-
-    #container {
-      text-align: center;
+      flex-direction: column;
+      padding: 20px;
     }
 
     textarea {
@@ -32,21 +58,59 @@
     }
 
     #output {
-      margin-top: 0px;
+      margin-top: 20px;
       font-size: 20px;
       color: black;
       height: 30px;
     }
+
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    a {
+      color: darkblue;
+      text-decoration: underline;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <div id="container">
-    <textarea id="input" placeholder="Type something and press Enter..."></textarea>
-    <div id="output"></div>
+
+  <div id="sidebar">
+    <h2>Why Strong Passwords Matter</h2>
+    <p>
+      Weak passwords are easy targets for hackers. A strong password protects your personal, financial, and sensitive information from unauthorized access.
+    </p>
+
+    <h2>How to Create a Strong Password</h2>
+    <ul>
+      <li>Use at least 12 characters</li>
+      <li>Mix uppercase, lowercase, numbers, and symbols</li>
+      <li>Avoid common words or personal info</li>
+      <li>Use a password manager to generate and store passwords</li>
+    </ul>
+
+    <img src="https://www.cisco.com/c/dam/assets/prod/security/password-security.jpg" alt="Password Security Illustration">
+    <p>
+      Learn more at:
+      <a href="https://www.cisco.com/c/en/us/products/security/what-are-password-security-and-protection.html#~q-a" target="_blank">
+        Cisco - Password Security
+      </a>
+    </p>
+  </div>
+
+  <div id="main">
+    <div id="container">
+      <textarea id="input" placeholder="Type something and press Enter..."></textarea>
+      <div id="output"></div>
+    </div>
   </div>
 
   <script>
-      const textarea = document.getElementById('input');
+    const textarea = document.getElementById('input');
     const output = document.getElementById('output');
     
     textarea.addEventListener('input', function () {
@@ -57,7 +121,7 @@
     textarea.addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
         event.preventDefault();
-        const message = "are you dumb?";
+        const message = "Password Saved";
         textarea.value = "";
         textarea.style.height = 'auto';
         output.textContent = ""; 
@@ -85,4 +149,3 @@
     });
   </script>
 </body>
-</html>
