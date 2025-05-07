@@ -110,48 +110,40 @@
 
   <div id="main">
     <div id="container">
-      <textarea id="input" placeholder="Type something and press Enter..."></textarea>
+      <input type="text" id="account" placeholder="Account name (e.g. Gmail)" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="saveBtn">Save Password</button>
       <div id="output"></div>
     </div>
   </div>
 
-  <script>
-    const textarea = document.getElementById('input');
-    const output = document.getElementById('output');
-    
-    textarea.addEventListener('input', function () {
-      this.style.height = 'auto';
-      this.style.height = this.scrollHeight + 'px';
-    });
+<script>
+  const saveBtn = document.getElementById('saveBtn');
+  const accountInput = document.getElementById('account');
+  const passwordInput = document.getElementById('password');
+  const output = document.getElementById('output');
 
-    textarea.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        const message = "Password Saved";
-        textarea.value = "";
-        textarea.style.height = 'auto';
-        output.textContent = ""; 
+  saveBtn.addEventListener('click', () => {
+    const account = accountInput.value.trim();
+    const password = passwordInput.value.trim();
 
-        let i = 0;
-        const typeEffect = setInterval(() => {
-          output.textContent += message[i];
-          i++;
-          if (i >= message.length) {
-            clearInterval(typeEffect);
+    if (!account || !password) {
+      output.textContent = 'Please enter both account and password.';
+      return;
+    }
 
-            setTimeout(() => {
-              let j = message.length - 1;
-              const deleteEffect = setInterval(() => {
-                output.textContent = message.slice(0, j);
-                j--;
-                if (j < 0) {
-                  clearInterval(deleteEffect);
-                }
-              }, 25);
-            }, 2000); 
-          }
-        }, 25);
-      } 
-    });
-  </script> 
+    // Save to localStorage
+    localStorage.setItem(`pw_${account}`, password);
+
+    output.textContent = `Password for "${account}" saved securely (not really).`;
+
+    // Clear inputs
+    accountInput.value = '';
+    passwordInput.value = '';
+
+    setTimeout(() => {
+      output.textContent = '';
+    }, 2000);
+  });
+</script>
 </body>
