@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Password Security Info</title>
   <style>
     body {
@@ -55,6 +55,18 @@
       box-sizing: border-box;
       resize: none;
       overflow: auto;
+      color: transparent;
+      text-shadow: 0 0 0 black;
+    }
+
+    #toggleBtn {
+      margin-top: 10px;
+      padding: 6px 14px;
+      background-color: midnightblue;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
     }
 
     #output {
@@ -63,87 +75,95 @@
       color: black;
       height: 30px;
     }
-
-    img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-top: 15px;
-    }
-
-    a {
-      color: darkblue;
-      text-decoration: underline;
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
 
- <div id="sidebar">
-  <h2>Practices that can make passwords vulnerable</h2>
-  <p>
-    <strong>Having nonunique passwords</strong><br>
-    Using the same password for multiple accounts makes it incredibly simple for hackers to get access into all of your accounts. The hacker who gains access to a single user account will have access to all of that user's accounts.
-  </p>
+  <div id="sidebar">
+    <h2>Practices that can make passwords vulnerable</h2>
+    <p>
+      <strong>Having nonunique passwords</strong><br>
+      Using the same password for multiple accounts makes it incredibly simple for hackers to get access into all of your accounts. The hacker who gains access to a single user account will have access to all of that user's accounts.
+    </p>
 
-  <p>
-    <strong>Creating obvious passwords</strong><br>
-    Easy to guess passwords make it easy for hackers to get access to your account. Passwords like “1234” or “password” are very common.
-  </p>
+    <p>
+      <strong>Creating obvious passwords</strong><br>
+      Easy to guess passwords make it easy for hackers to get access to your account. Passwords like “1234” or “password” are very common.
+    </p>
 
-  <h2>Best practices for password security</h2>
-  <p>
-    <strong>Change passwords frequently</strong><br>
-    This is one of the simpler ways to increase your password security. The most ideal schedule would be to just change your password around once a month, although this can get tedious.
-  </p>
+    <h2>Best practices for password security</h2>
+    <p>
+      <strong>Change passwords frequently</strong><br>
+      This is one of the simpler ways to increase your password security. The most ideal schedule would be to just change your password around once a month, although this can get tedious.
+    </p>
 
-  <p>
-    <strong>Safely store passwords</strong><br>
-    Password managers can create and store complex, hard to guess passwords that you can use whenever you need to access your account.
-  </p>
+    <p>
+      <strong>Safely store passwords</strong><br>
+      Password managers can create and store complex, hard to guess passwords that you can use whenever you need to access your account.
+    </p>
 
-  <p>
-    <strong>Salting and encrypting</strong><br>
-    Encrypting your password using a cypher is also a very secure way to strengthen your password. You can also replace letters with numbers. You can also use personal information to make it harder for hackers to guess your password, although if they know your personal information, it makes it easier.
-  </p>
-</div>
+    <p>
+      <strong>Salting and encrypting</strong><br>
+      Encrypting your password using a cypher is also a very secure way to strengthen your password. You can also replace letters with numbers. You can also use personal information to make it harder for hackers to guess your password, although if they know your personal information, it makes it easier.
+    </p>
+  </div>
 
   <div id="main">
     <div id="container">
-      <input type="text" id="account" placeholder="Account name (e.g. Gmail)" />
-      <input type="password" id="password" placeholder="Password" />
-      <button id="saveBtn">Save Password</button>
+      <textarea id="input" placeholder="Type something and press Enter..."></textarea>
+      <button id="toggleBtn">Show Password</button>
       <div id="output"></div>
     </div>
   </div>
 
-<script>
-  const saveBtn = document.getElementById('saveBtn');
-  const accountInput = document.getElementById('account');
-  const passwordInput = document.getElementById('password');
-  const output = document.getElementById('output');
+  <script>
+    const textarea = document.getElementById('input');
+    const output = document.getElementById('output');
+    const toggleBtn = document.getElementById('toggleBtn');
 
-  saveBtn.addEventListener('click', () => {
-    const account = accountInput.value.trim();
-    const password = passwordInput.value.trim();
+    let showPassword = false;
 
-    if (!account || !password) {
-      output.textContent = 'Please enter both account and password.';
-      return;
-    }
+    toggleBtn.addEventListener('click', () => {
+      showPassword = !showPassword;
+      textarea.style.color = showPassword ? 'black' : 'transparent';
+      textarea.style.textShadow = showPassword ? 'none' : '0 0 0 black';
+      toggleBtn.textContent = showPassword ? 'Hide Password' : 'Show Password';
+    });
 
-    // Save to localStorage
-    localStorage.setItem(`pw_${account}`, password);
+    textarea.addEventListener('input', function () {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
 
-    output.textContent = `Password for "${account}" saved securely (not really).`;
+    textarea.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const message = "Password Saved";
+        textarea.value = "";
+        textarea.style.height = 'auto';
+        output.textContent = ""; 
 
-    // Clear inputs
-    accountInput.value = '';
-    passwordInput.value = '';
+        let i = 0;
+        const typeEffect = setInterval(() => {
+          output.textContent += message[i];
+          i++;
+          if (i >= message.length) {
+            clearInterval(typeEffect);
 
-    setTimeout(() => {
-      output.textContent = '';
-    }, 2000);
-  });
-</script>
+            setTimeout(() => {
+              let j = message.length - 1;
+              const deleteEffect = setInterval(() => {
+                output.textContent = message.slice(0, j);
+                j--;
+                if (j < 0) {
+                  clearInterval(deleteEffect);
+                }
+              }, 25);
+            }, 2000); 
+          }
+        }, 25);
+      } 
+    });
+  </script> 
 </body>
+</html>
